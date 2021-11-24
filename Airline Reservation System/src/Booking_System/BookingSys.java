@@ -26,11 +26,19 @@ import javax.swing.JEditorPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import java.awt.SystemColor;
+
+import java.sql.*;
+import javax.swing.*;
 
 public class BookingSys {
 
 	private JFrame frame;
 	private JTextField txtTotalCost;
+	private JTextField txtTicketInfo;
+	
+	Connection conn = null;
 
 	/**
 	 * Launch the application.
@@ -53,6 +61,7 @@ public class BookingSys {
 	 */
 	public BookingSys() {
 		initialize();
+		conn = SqliteConnection.ConnectDb();
 	}
 
 	/**
@@ -117,10 +126,11 @@ public class BookingSys {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				String x = String.valueOf(comboBoxTicketClass.getSelectedItem());
-				System.out.println(x);
+
 				if(x == "Economy")
 				{
 					txtTotalCost.setText("£100");
+					txtTicketInfo.setText("From London to Berline ");
 				}
 				else if(x == "Business")
 				{
@@ -145,5 +155,17 @@ public class BookingSys {
 		txtTotalCost.setBounds(467, 362, 86, 20);
 		frame.getContentPane().add(txtTotalCost);
 		txtTotalCost.setColumns(10);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panel.setBounds(386, 283, 349, 66);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		txtTicketInfo = new JTextField();
+		txtTicketInfo.setEditable(false);
+		txtTicketInfo.setBounds(10, 11, 329, 44);
+		panel.add(txtTicketInfo);
+		txtTicketInfo.setColumns(10);
 	}
 }
